@@ -1,0 +1,6 @@
+framework module MediaMelonNowtilus {
+  umbrella header "MediaMelonNowtilus.h"
+  export *
+
+  module * { export * }
+}

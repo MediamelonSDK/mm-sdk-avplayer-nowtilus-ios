@@ -1,0 +1,11 @@
+framework module MediaMelonNowtilustvOS {
+  umbrella header "MediaMelonNowtilustvOS.h"
+  export *
+
+  module * { export * }
+}
+
+module MediaMelonNowtilustvOS.Swift {
+  header "MediaMelonNowtilustvOS-Swift.h"
+  requires objc
+}

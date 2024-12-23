@@ -1,0 +1,1134 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name MediaMelonNowtilus
+import AVFoundation
+import AVKit
+import CoreTelephony
+import Foundation
+@_exported import MediaMelonNowtilus
+import Swift
+import SystemConfiguration
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum MMSSAIAdSate : Swift.Int {
+  case request
+  case adPlaying
+  case adPaused
+  case adSkipped
+  case adCompleted
+  case adError
+  case adBlocked
+  case adImpression
+  case adStarted
+  case adClicked
+  case adResumed
+  case adFirstQuartile
+  case adMidpoint
+  case adThirdQuartile
+  case adEnded
+  case adCueTimelineAdded
+  case adCueTimelineStart
+  case adCueTimelineEnd
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class MMSSAIAdDetails {
+  public var adId: Swift.String
+  public var adTitle: Swift.String
+  public var adServer: Swift.String
+  public var adIndex: Swift.Int
+  public var adTotalAdsInPod: Swift.Int
+  public var adDuration: Swift.Int64
+  public var startTime: Swift.Int64
+  public var endTime: Swift.Int64
+  public var firstQuartile: Swift.Int64
+  public var midPoint: Swift.Int64
+  public var thirdQuartile: Swift.Int64
+  public var complete: Swift.Int64
+  public var adCurrentPlaybackTime: Swift.Int64
+  public var position: Swift.String
+  public var active: Swift.Bool
+  public var adState: Swift.String
+  public var streamType: Swift.String
+  public var isLinear: Swift.Bool
+  public var adImpressionsTemplates: [MediaMelonNowtilus.VastImpression]
+  public var adTrackingEvents: [MediaMelonNowtilus.VastTrackingEvent]
+  public var adClickEvents: [MediaMelonNowtilus.VastVideoClick]
+  public var startPosition: Swift.Int64
+  public var endPosition: Swift.Int64
+  @objc deinit
+}
+public protocol GenericAdProtocol : AnyObject {
+  func notifySSAIAdDetails(eventName: MediaMelonNowtilus.MMSSAIAdSate, adInfo: MediaMelonNowtilus.MMSSAIAdDetails)
+  func notifySSAIAdDetailsWithTimeline(eventName: MediaMelonNowtilus.MMSSAIAdSate, adTimeline: [MediaMelonNowtilus.MMSSAIAdDetails])
+}
+public protocol MMSSAIDelegate {
+  func notifySSAIEventWithTimeline(state: MediaMelonNowtilus.MMAdState, adTimeline: [MediaMelonNowtilus.MMSSAIAdInfo])
+  func notifySSAIAdEvent(state: MediaMelonNowtilus.MMAdState, adInfo: MediaMelonNowtilus.MMSSAIAdInfo)
+}
+public enum MMCurrentPlayerState {
+  case IDLE, PLAYING, PAUSED, STOPPED, ERROR
+  public static func == (a: MediaMelonNowtilus.MMCurrentPlayerState, b: MediaMelonNowtilus.MMCurrentPlayerState) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class GenericMMWrapper : ObjectiveC.NSObject, MediaMelonNowtilus.MMSmartStreamingObserver {
+  @objc public func sessionInitializationCompleted(with status: MediaMelonNowtilus.MMSmartStreamingInitializationStatus, andDescription description: Swift.String!, forCmdWithId cmdId: Swift.Int, nowtilusPermission enableNowtilus: Swift.Bool)
+  public static let shared: MediaMelonNowtilus.GenericMMWrapper
+  public var extIsLive: Swift.Bool
+  public func getCoreSDKVersion() -> Swift.String
+  public func getHarmonicSSAIVersion() -> Swift.String
+  public func reportSDKVersion(sdkVersion: Swift.String)
+  public static func disableManifestsFetch(disable: Swift.Bool)
+  public func reportDeviceCapabilities()
+  public func reportCustomMetadata(key: Swift.String, value: Swift.String)
+  public static func updateSubscriber(subscriberId: Swift.String, subscriberType: Swift.String, subscriberMetadata: Swift.String)
+  public func reportVideoQuality(videoQuality: Swift.String)
+  public func reportDeviceMarketingName(deviceMarketingName: Swift.String)
+  public func reportDeviceID()
+  public func reportAppData(appName: Swift.String, appVersion: Swift.String)
+  public func enableLogTrace(logStTrace: Swift.Bool)
+  public func reportError(error: Swift.String, playbackPosMilliSec: Swift.Int)
+  public static func reportMetricValue(metricToOverride: MediaMelonNowtilus.MMOverridableMetric, value: Swift.String)
+  public func reportMediaTrackInfo(isSubtitleActive: Swift.Bool, subtitleTrack: Swift.String, audioTrack: Swift.String, isVDSActive: Swift.Bool)
+  public func reportNetworkType(connInfo: MediaMelonNowtilus.MMConnectionInfo)
+  public func reportLocation(latitude: Swift.Double, longitude: Swift.Double)
+  public func reportChunkRequest(chunkInfo: MediaMelonNowtilus.MMChunkInformation)
+  public func reportChunkRequest(bitrate: Swift.Int, fragmentDuration: Swift.Int?, url: Swift.String?)
+  public func setPresentationInformation(presentationInfo: MediaMelonNowtilus.MMPresentationInfo)
+  public func reportDownloadRate(downloadRate: Swift.Int)
+  public func reportBufferingStarted()
+  public func reportBufferingCompleted()
+  public func reportABRSwitch(prevBitrate: Swift.Int, newBitrate: Swift.Int)
+  public func reportFrameLoss(lossCnt: Swift.Int)
+  public func reportPresentationSize(width: Swift.Int, height: Swift.Int)
+  public func reportPlayerSeekCompleted(seekEndPos: Swift.Int)
+  public func reportPlayerSeekStarted()
+  public func reportPlayerState(playerState: MediaMelonNowtilus.MMPlayerState)
+  public func registerForMMSDK(registrationInformation pInfo: MediaMelonNowtilus.MMRegistrationInformation)
+  public func reportUserInitiatedPlayback()
+  public func initialiseSession(registrationUri: Swift.String, assetInformation: MediaMelonNowtilus.MMAssetInformation)
+  public func updatePlaybackPosition(currentPosition: Swift.Int)
+  public func setToolboxEndpointDetails(url: Swift.String, tbtoken: Swift.String, tbid: Swift.String, cid: Swift.String)
+  public func setStarzEndpointDetails(url: Swift.String, szapikey: Swift.String, szsession: Swift.String, cid: Swift.String)
+  public func isAdPlaying() -> Swift.Bool
+  weak public var genericAdDelegate: (any MediaMelonNowtilus.GenericAdProtocol)?
+  @objc override dynamic public init()
+  @objc deinit
+}
+public class VOPlayerAlternateInfo {
+  public init(tIndex: Swift.Int?, bitRate: Swift.Int?, width: Swift.Int?, height: Swift.Int?, codecIdentifier: Swift.String?)
+  @objc deinit
+}
+@objc public class MMRegistrationInformation : ObjectiveC.NSObject {
+  public var customerID: Swift.String!
+  public var component: Swift.String!
+  public var playerName: Swift.String!
+  public var domainName: Swift.String?
+  public var subscriberID: Swift.String?
+  public var hashSubscriberID: Swift.Bool!
+  public var subscriberType: Swift.String?
+  public var subscriberTag: Swift.String?
+  public var playerBrand: Swift.String?
+  public var playerModel: Swift.String?
+  public var playerVersion: Swift.String?
+  @objc public init(customerID cID: Swift.String, playerName pName: Swift.String)
+  @objc public func setDomain(_ dName: Swift.String?)
+  @objc public func setSubscriberInformation(subscriberID subsID: Swift.String?, subscriberType subsType: Swift.String?, subscriberTag subsTag: Swift.String?, hashSubscriberID hashSubID: Swift.Bool)
+  @objc public func setSubscriberInformation(subscriberID subsID: Swift.String?, subscriberType subsType: Swift.String?, subscriberTag subsTag: Swift.String?)
+  @objc public func setPlayerInformation(brand: Swift.String?, model: Swift.String?, version: Swift.String?)
+  @objc public func setComponentName(_ cName: Swift.String?)
+  @objc deinit
+}
+public enum MMOverridableMetrics {
+  case Latency, CDN, DurationWatched
+  public static func == (a: MediaMelonNowtilus.MMOverridableMetrics, b: MediaMelonNowtilus.MMOverridableMetrics) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc public class MMAssetInformation : ObjectiveC.NSObject, Swift.Codable {
+  public var assetURL: Swift.String!
+  public var assetID: Swift.String?
+  public var assetName: Swift.String?
+  public var videoId: Swift.String?
+  public var metafileURL: Foundation.URL?
+  public var customKVPs: [Swift.String : Swift.String]!
+  public var contentType: Swift.String?
+  public var drmProtection: Swift.String?
+  public var episodeNumber: Swift.String?
+  public var genre: Swift.String?
+  public var season: Swift.String?
+  public var seriesTitle: Swift.String?
+  @objc public init(assetURL aURL: Swift.String, assetID aId: Swift.String?, assetName aName: Swift.String?, videoId vId: Swift.String?)
+  @objc public init(assetURL aURL: Swift.String, assetID aId: Swift.String?, assetName aName: Swift.String?, videoId vId: Swift.String?, contyentType cType: Swift.String? = nil, drmProtection: Swift.String? = nil, episodeNumber eNumber: Swift.String? = nil, genre: Swift.String? = nil, season: Swift.String? = nil, seriesTitle: Swift.String? = nil)
+  @objc public func addCustomKVP(_ key: Swift.String, _ value: Swift.String)
+  @objc public func setQBRMode(_ mode: MediaMelonNowtilus.MMQBRMode, withMetaURL metaURL: Foundation.URL?)
+  @objc public func setContentType(_ cType: Swift.String?)
+  @objc public func setDrmProtection(_ drmP: Swift.String?)
+  @objc public func setEpisodeNumber(_ eNumber: Swift.String?)
+  @objc public func setGenre(_ genre: Swift.String?)
+  @objc public func setSeason(_ season: Swift.String?)
+  @objc public func setSeriesTitle(_ sTitle: Swift.String?)
+  @objc deinit
+  public func encode(to encoder: any Swift.Encoder) throws
+  required public init(from decoder: any Swift.Decoder) throws
+}
+public class MMSSAIAdInfo {
+  public var adId: Swift.String
+  public var adTitle: Swift.String
+  public var adServer: Swift.String
+  public var adIndex: Swift.Int
+  public var adTotalAdsInPod: Swift.Int
+  public var adDuration: Swift.Int64
+  public var startTime: Swift.Int64
+  public var endTime: Swift.Int64
+  public var firstQuartile: Swift.Int64
+  public var midPoint: Swift.Int64
+  public var thirdQuartile: Swift.Int64
+  public var complete: Swift.Int64
+  public var adCurrentPlaybackTime: Swift.Int64
+  public var position: Swift.String
+  public var active: Swift.Bool
+  public var adState: Swift.String
+  public var streamType: Swift.String
+  public var isLinear: Swift.Bool
+  public var adTrackerInfo: MediaMelonNowtilus.AdTrackerInfo?
+  public var adImpressionsTemplates: [MediaMelonNowtilus.VastImpression]
+  public var adTrackingEvents: [MediaMelonNowtilus.VastTrackingEvent]
+  public var adClickEvents: [MediaMelonNowtilus.VastVideoClick]
+  public var adSkipOffset: Swift.Int64
+  public var startPosition: Swift.Int64
+  public var endPosition: Swift.Int64
+  public init(aId: Swift.String, aTitle: Swift.String, aServer: Swift.String, aIndex: Swift.Int, adTotalAdsInPod: Swift.Int, aDuration: Swift.Int64, sTime: Swift.Int64, eTime: Swift.Int64, fqTime: Swift.Int64, mpTime: Swift.Int64, tqTime: Swift.Int64, complete: Swift.Int64, adCurrentTime: Swift.Int64, position: Swift.String, active: Swift.Bool, aState: Swift.String, sType: Swift.String, isLinear: Swift.Bool, atInfo: MediaMelonNowtilus.AdTrackerInfo, aImpressionsTemplates: [MediaMelonNowtilus.VastImpression], aTrackingEvents: [MediaMelonNowtilus.VastTrackingEvent], adClickEvents: [MediaMelonNowtilus.VastVideoClick], adSkipOffset: Swift.Int64, sPosition: Swift.Int64, ePosition: Swift.Int64)
+  public func updateAdState(state: Swift.String)
+  @objc deinit
+}
+public class AdTrackerInfo {
+  public var isAdImpressionSent: Swift.Bool
+  public var isAdStartSent: Swift.Bool
+  public var isFirstQuartileSent: Swift.Bool
+  public var isMidPointSent: Swift.Bool
+  public var isThirdQuartileSent: Swift.Bool
+  public var isAdCompleteSent: Swift.Bool
+  public var isAdSkippedSent: Swift.Bool
+  public init()
+  public func resetToDefault()
+  public func setAdComplete()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class MMSSAIAdManager : ObjectiveC.NSObject {
+  public var isAdManagerSet: Swift.Bool
+  public var delegate: (any MediaMelonNowtilus.MMSSAIDelegate)?
+  @objc override dynamic public init()
+  public func continueSSAIManager()
+  public func setupMediaURL(mediaURL: Swift.String)
+  public func parseVastFromManifest(vastUrl: Swift.String)
+  public func setMacroSubstitution(macroData dictionary: Swift.Dictionary<Swift.String, Any>)
+  public func setValidAdId(validAdId: Swift.String)
+  public func setupSSAIAdManager(mediaURL: Swift.String, vastUrl: Swift.String, isLive: Swift.Bool)
+  public func setupSSAIAdManager(mediaURL: Swift.String, isLive: Swift.Bool, pollForVast: Swift.Bool, vodResponseData: Foundation.Data, clientSideTracking: Swift.Bool)
+  public func skipClicked(player: AVFoundation.AVPlayer)
+  public func fireAdClickTrackingURLs()
+  public func enableSSAILogTrace()
+  public func disableSSAILogTrace()
+  public func stopSSAIAdManager()
+  public func notifyPlayerPlaybackTime(playbackTime: Swift.Int)
+  public func syncPDTPosition(pdtInMs: Swift.Int64)
+  @objc deinit
+}
+extension MediaMelonNowtilus.MMSSAIAdManager : MediaMelonNowtilus.VastTrackerDelegate {
+  public func adFirstQuartile(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+  public func adMidpoint(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+  public func adThirdQuartile(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+}
+public struct IconClicks : Swift.Codable {
+  public var iconClickThrough: Foundation.URL?
+  public var iconClickTracking: [MediaMelonNowtilus.VastIconClickTracking]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.IconClicks : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.IconClicks, b: MediaMelonNowtilus.IconClicks) -> Swift.Bool
+}
+public struct VastAdParameters : Swift.Codable {
+  public let xmlEncoded: Swift.String?
+  public var content: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastAdParameters : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastAdParameters, b: MediaMelonNowtilus.VastAdParameters) -> Swift.Bool
+}
+public struct VastAdVerificationParameters : Swift.Codable {
+  public var data: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastAdVerificationParameters : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastAdVerificationParameters, b: MediaMelonNowtilus.VastAdVerificationParameters) -> Swift.Bool
+}
+public struct VastImpression : Swift.Codable {
+  public let id: Swift.String?
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastImpression {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastImpression : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastImpression, b: MediaMelonNowtilus.VastImpression) -> Swift.Bool
+}
+public enum TrackingEventType : Swift.String, Swift.Codable {
+  case impression
+  case firstQuartile
+  case midpoint
+  case thirdQuartile
+  case complete
+  case creativeView
+  case start
+  case mute
+  case unmute
+  case pause
+  case rewind
+  case resume
+  case fullscreen
+  case exitFullscreen
+  case playerExpand
+  case playerCollapse
+  case acceptInvitationLinear
+  case closeLinear
+  case skip
+  case progress
+  case collapse
+  case expand
+  case acceptInvitation
+  case close
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastTrackingEvent : Swift.Codable {
+  public let type: MediaMelonNowtilus.TrackingEventType
+  public let offset: Swift.Double?
+  public var url: Foundation.URL?
+  public var tracked: Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastTrackingEvent {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastTrackingEvent : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastTrackingEvent, b: MediaMelonNowtilus.VastTrackingEvent) -> Swift.Bool
+}
+public struct VastCreativeExtension : Swift.Codable {
+  public let mimeType: Swift.String?
+  public var content: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastCreativeExtension {
+  public init?(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastCreativeExtension : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastCreativeExtension, b: MediaMelonNowtilus.VastCreativeExtension) -> Swift.Bool
+}
+public enum VastErrorCodes : Swift.Int {
+  case xmlParsingError
+  case vastSchemaValidationError
+  case vastVersionOfResponseNotSupported
+  case traffickingError
+  case videoPlayerExpectingDifferentLinearity
+  case videoPlayerExpectingDifferentDuration
+  case videoPlayerExpectingDifferentSize
+  case adCategoryNotProvided
+  case generalWrapperError
+  case timeoutOfVastURI
+  case wrapperLimitReached
+  case noAdsVastResponse
+  case inlineResponseFailedToDisplayInTime
+  case generalLinearError
+  case fileNotFound
+  case timeoutOfMediaFile
+  case mediaFileNotSupported
+  case problemDisplayingMediaFile
+  case conditionalAdRejected
+  case interactiveUnitInNodeNotExecuted
+  case verificationUnitInNodeNotExecuted
+  case generalNonLinearAdsError
+  case creativeDimensionTooLarge
+  case unableToFetchResource
+  case nonLinearResourceNotSupported
+  case generalCompanionAdsError
+  case noAvailableSpace
+  case unableToDisplayCompanion
+  case unableToFetchCompanionResource
+  case companionResourceNotSupported
+  case undefinedError
+  case generalVPAIDError
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum ClickType : Swift.String, Swift.Codable {
+  case clickThrough
+  case clickTracking
+  case customClick
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastVideoClick : Swift.Codable {
+  public let id: Swift.String?
+  public let type: MediaMelonNowtilus.ClickType
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastVideoClick {
+  public init(type: MediaMelonNowtilus.ClickType, attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastVideoClick : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastVideoClick, b: MediaMelonNowtilus.VastVideoClick) -> Swift.Bool
+}
+public protocol VastTrackerNonLinearDelegate : AnyObject {
+  func adBreakStart(vastTracker: MediaMelonNowtilus.VastTrackerNonLinear)
+  func adBreakComplete(vastTracker: MediaMelonNowtilus.VastTrackerNonLinear)
+}
+public class VastTrackerNonLinear {
+  weak public var delegate: (any MediaMelonNowtilus.VastTrackerNonLinearDelegate)?
+  final public let id: Swift.String
+  final public let vastModel: MediaMelonNowtilus.VastModel
+  final public let totalAds: Swift.Int
+  final public let startTime: Swift.Double
+  @available(*, message: "do not use VastTracker for storing this model, it is not being used")
+  public var vmapModel: MediaMelonNowtilus.VMAPModel?
+  public init(id: Swift.String, vastModel: MediaMelonNowtilus.VastModel, startTime: Swift.Double = 0.0, supportAdBuffets: Swift.Bool = false, delegate: (any MediaMelonNowtilus.VastTrackerNonLinearDelegate)? = nil, trackProgressCumulatively: Swift.Bool = true)
+  @available(*, message: "Use init(id:,vastModel:) instead")
+  convenience public init(id: Swift.String, vmapModel: MediaMelonNowtilus.VMAPModel, breakId: Swift.String, startTime: Swift.Double, supportAdBuffets: Swift.Bool = false, delegate: (any MediaMelonNowtilus.VastTrackerNonLinearDelegate)? = nil) throws
+  public func updateProgress(time: Swift.Double) throws
+  public func adBreakCompleted() throws
+  @objc deinit
+}
+public enum VMAPAdSourceTemplate : Swift.String, Swift.Codable {
+  case vast
+  case vast1
+  case vast2
+  case vast3
+  case vast4
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VMAPAdSource : Swift.Codable {
+  public let allowMultipleAds: Swift.Bool
+  public let followRedirects: Swift.Bool
+  public let id: Swift.String
+  public var vastAdData: MediaMelonNowtilus.VastModel?
+  public var adTagURI: Foundation.URL?
+  public var customAdData: Swift.String?
+  public var templateType: MediaMelonNowtilus.VMAPAdSourceTemplate?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VMAPAdSource {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+public enum VMAPTrackingEventType : Swift.String, Swift.Codable {
+  case breakStart
+  case breakEnd
+  case error
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VMAPTrackingEvent : Swift.Codable {
+  public let event: MediaMelonNowtilus.VMAPTrackingEventType
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VMAPTrackingEvent {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+public struct VastMediaFiles : Swift.Codable {
+  public var mediaFiles: [MediaMelonNowtilus.VastMediaFile]
+  public var interactiveCreativeFiles: [MediaMelonNowtilus.VastInteractiveCreativeFile]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastMediaFiles : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastMediaFiles, b: MediaMelonNowtilus.VastMediaFiles) -> Swift.Bool
+}
+public enum PricingModel : Swift.String, Swift.Codable {
+  case cpc
+  case cpm
+  case cpe
+  case cpv
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastPricing : Swift.Codable {
+  public let model: MediaMelonNowtilus.PricingModel
+  public let currency: Swift.String
+  public var pricing: Swift.Double?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastPricing : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastPricing, b: MediaMelonNowtilus.VastPricing) -> Swift.Bool
+}
+public enum VastViewableImpressionType : Swift.String {
+  case viewable
+  case notViewable
+  case viewUndetermined
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastViewableImpression : Swift.Codable {
+  public let id: Swift.String
+  public var url: Foundation.URL?
+  public var viewable: [Foundation.URL]
+  public var notViewable: [Foundation.URL]
+  public var viewUndetermined: [Foundation.URL]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastViewableImpression : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastViewableImpression, b: MediaMelonNowtilus.VastViewableImpression) -> Swift.Bool
+}
+public enum CompanionsRequirement : Swift.String, Swift.Codable {
+  case all
+  case any
+  case none
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastCompanionAds : Swift.Codable {
+  public let required: MediaMelonNowtilus.CompanionsRequirement
+  public var companions: [MediaMelonNowtilus.VastCompanionCreative]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastCompanionAds {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastCompanionAds : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastCompanionAds, b: MediaMelonNowtilus.VastCompanionAds) -> Swift.Bool
+}
+public struct VastAdSystem : Swift.Codable {
+  public let version: Swift.String?
+  public var system: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastAdSystem : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastAdSystem, b: MediaMelonNowtilus.VastAdSystem) -> Swift.Bool
+}
+public struct VMAPModel : Swift.Codable {
+  public let version: Swift.String
+  public var adBreaks: [MediaMelonNowtilus.VMAPAdBreak]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VMAPModel {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+public struct VastCreative : Swift.Codable {
+  public let id: Swift.String?
+  public let adId: Swift.String?
+  public let sequence: Swift.Int?
+  public let apiFramework: Swift.String?
+  public var universalAdId: MediaMelonNowtilus.VastUniversalAdId?
+  public var creativeExtensions: [MediaMelonNowtilus.VastCreativeExtension]
+  public var linear: MediaMelonNowtilus.VastLinearCreative?
+  public var nonLinearAds: MediaMelonNowtilus.VastNonLinearAdsCreative?
+  public var companionAds: MediaMelonNowtilus.VastCompanionAds?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastCreative {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastCreative : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastCreative, b: MediaMelonNowtilus.VastCreative) -> Swift.Bool
+}
+public enum VMAPAdBreakType : Swift.String, Swift.Codable {
+  case linear
+  case nonlinear
+  case display
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VMAPAdBreak : Swift.Codable {
+  public var breakId: Swift.String?
+  public var repeatAfter: Swift.String?
+  public let breakType: MediaMelonNowtilus.VMAPAdBreakType
+  public let timeOffset: Swift.String
+  public var adSource: MediaMelonNowtilus.VMAPAdSource?
+  public var trackingEvents: [MediaMelonNowtilus.VMAPTrackingEvent]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VMAPAdBreak {
+  public init(attrDict: [Swift.String : Swift.String])
+  public func trackEvent(withType type: MediaMelonNowtilus.VMAPTrackingEventType)
+  public func trackEvents(withUrls urls: [Foundation.URL])
+}
+public struct VastIconClickTracking : Swift.Codable {
+  public let id: Swift.String?
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastIconClickTracking : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastIconClickTracking, b: MediaMelonNowtilus.VastIconClickTracking) -> Swift.Bool
+}
+public struct VastInteractiveCreativeFile : Swift.Codable {
+  public let type: Swift.String?
+  public let apiFramework: Swift.String?
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastInteractiveCreativeFile : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastInteractiveCreativeFile, b: MediaMelonNowtilus.VastInteractiveCreativeFile) -> Swift.Bool
+}
+public struct VastWrapper : Swift.Codable {
+  public let followAdditionalWrappers: Swift.Bool?
+  public let allowMultipleAds: Swift.Bool?
+  public let fallbackOnNoAd: Swift.Bool?
+  public var adTagUri: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastWrapper : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastWrapper, b: MediaMelonNowtilus.VastWrapper) -> Swift.Bool
+}
+public enum VMAPErrorCodes : Swift.Int {
+  case undefined
+  case vmapSchemaError
+  case vmapResponesVersionNotSupported
+  case vmapParsingError
+  case adBreakTypeNotSupported
+  case generalAdResponseDocumentError
+  case adResponseTemplateTypeNotSupported
+  case adResponseDocumentExtractionOrParsingError
+  case adResponseDocumentRetrievalTimeout
+  case adResponseDocumentRetrievalError
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor(unsafe) public static let modelName: Swift.String
+}
+public struct VastModel : Swift.Codable {
+  public let version: Swift.String
+  public var ads: [MediaMelonNowtilus.VastAd]
+  public var errors: [Foundation.URL]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastModel {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastModel : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastModel, b: MediaMelonNowtilus.VastModel) -> Swift.Bool
+}
+public enum VMAPError : Swift.Error {
+  case invalidXMLDocument
+  case invalidVMAPDocument
+  case unableToParseDocument
+  case unableToCreateXMLParser
+  case internalError
+  public static func == (a: MediaMelonNowtilus.VMAPError, b: MediaMelonNowtilus.VMAPError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct VastCreativeParameter : Swift.Codable {
+  public var creativeId: Swift.String
+  public var name: Swift.String
+  public var type: Swift.String
+  public var content: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastCreativeParameter {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastCreativeParameter : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastCreativeParameter, b: MediaMelonNowtilus.VastCreativeParameter) -> Swift.Bool
+}
+public struct VastVerification : Swift.Codable {
+  public let vendor: Foundation.URL?
+  public var viewableImpression: MediaMelonNowtilus.VastViewableImpression?
+  public var javaScriptResource: [MediaMelonNowtilus.VastResource]
+  public var flashResources: [MediaMelonNowtilus.VastResource]
+  public var verificationParameters: MediaMelonNowtilus.VastAdVerificationParameters?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastVerification : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastVerification, b: MediaMelonNowtilus.VastVerification) -> Swift.Bool
+}
+public struct VastNonLinearAdsCreative : Swift.Codable {
+  public var trackingEvents: [MediaMelonNowtilus.VastTrackingEvent]
+  public var nonLinear: [MediaMelonNowtilus.VastNonLinear]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastNonLinearAdsCreative : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastNonLinearAdsCreative, b: MediaMelonNowtilus.VastNonLinearAdsCreative) -> Swift.Bool
+}
+public struct VastExtension : Swift.Codable {
+  public let type: Swift.String
+  public var creativeParameters: [MediaMelonNowtilus.VastCreativeParameter]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastExtension {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastExtension : Swift.Equatable {
+  public static func == (lhs: MediaMelonNowtilus.VastExtension, rhs: MediaMelonNowtilus.VastExtension) -> Swift.Bool
+}
+public struct VMAPExtension {
+}
+public var macroDiction: [Swift.String : Any]
+public struct VastAdCategory : Swift.Codable {
+  public let authority: Foundation.URL?
+  public var category: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastAdCategory : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastAdCategory, b: MediaMelonNowtilus.VastAdCategory) -> Swift.Bool
+}
+public struct VastUniversalAdId : Swift.Codable {
+  public let idRegistry: Swift.String
+  public let idValue: Swift.String
+  public var uniqueCreativeId: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastUniversalAdId {
+  public init?(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastUniversalAdId : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastUniversalAdId, b: MediaMelonNowtilus.VastUniversalAdId) -> Swift.Bool
+}
+public enum AdType : Swift.String, Swift.Codable {
+  case inline
+  case wrapper
+  case unknown
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VastAd : Swift.Codable {
+  public var type: MediaMelonNowtilus.AdType
+  public let id: Swift.String
+  public let sequence: Swift.Int?
+  public let conditionalAd: Swift.Bool?
+  public var adSystem: MediaMelonNowtilus.VastAdSystem?
+  public var impressions: [MediaMelonNowtilus.VastImpression]
+  public var adVerifications: [MediaMelonNowtilus.VastVerification]
+  public var viewableImpression: MediaMelonNowtilus.VastViewableImpression?
+  public var pricing: MediaMelonNowtilus.VastPricing?
+  public var errors: [Foundation.URL]
+  public var creatives: [MediaMelonNowtilus.VastCreative]
+  public var extensions: [MediaMelonNowtilus.VastExtension]
+  public var adTitle: Swift.String?
+  public var adCategories: [MediaMelonNowtilus.VastAdCategory]
+  public var description: Swift.String?
+  public var advertiser: Swift.String?
+  public var surveys: [MediaMelonNowtilus.VastSurvey]
+  public var wrapper: MediaMelonNowtilus.VastWrapper?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastAd {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastAd : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastAd, b: MediaMelonNowtilus.VastAd) -> Swift.Bool
+}
+public struct VastLinearCreative : Swift.Codable {
+  public let skipOffset: Swift.String?
+  public var duration: Swift.Double?
+  public var adParameters: MediaMelonNowtilus.VastAdParameters?
+  public var videoClicks: [MediaMelonNowtilus.VastVideoClick]
+  public var trackingEvents: [MediaMelonNowtilus.VastTrackingEvent]
+  public var files: MediaMelonNowtilus.VastMediaFiles
+  public var icons: [MediaMelonNowtilus.VastIcon]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastLinearCreative {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastLinearCreative : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastLinearCreative, b: MediaMelonNowtilus.VastLinearCreative) -> Swift.Bool
+}
+public struct VastSurvey : Swift.Codable {
+  public let type: Swift.String?
+  public var survey: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastSurvey : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastSurvey, b: MediaMelonNowtilus.VastSurvey) -> Swift.Bool
+}
+public struct VastStaticResource : Swift.Codable {
+  public let creativeType: Swift.String
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastStaticResource : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastStaticResource, b: MediaMelonNowtilus.VastStaticResource) -> Swift.Bool
+}
+public protocol VastTrackerDelegate : AnyObject {
+  func adFirstQuartile(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+  func adMidpoint(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+  func adThirdQuartile(vastTracker: MediaMelonNowtilus.VastTracker, ad: MediaMelonNowtilus.VastAd)
+}
+public struct TrackerModel {
+}
+public class VastTracker {
+  weak public var delegate: (any MediaMelonNowtilus.VastTrackerDelegate)?
+  final public let vastModel: MediaMelonNowtilus.VastModel
+  final public let totalAds: Swift.Int
+  final public let startTime: Swift.Double
+  public init(vastModel: MediaMelonNowtilus.VastModel, startTime: Swift.Double = 0.0, supportAdBuffets: Swift.Bool = false, delegate: (any MediaMelonNowtilus.VastTrackerDelegate)? = nil, trackProgressCumulatively: Swift.Bool = true)
+  @objc deinit
+}
+extension MediaMelonNowtilus.VastTracker {
+  public func updateProgress(time: Swift.Double) throws
+  public func trackAdBreakStart(for adBreak: MediaMelonNowtilus.VMAPAdBreak)
+  public func trackAdBreakEnd(for adBreak: MediaMelonNowtilus.VMAPAdBreak)
+  public func trackAdBreakEvents(for adBreak: MediaMelonNowtilus.VMAPAdBreak, withURLs urls: [Foundation.URL])
+  public func trackAdStart(withId id: Swift.String) throws
+  public func trackAdComplete() throws
+  public func trackSkippedAds(with ids: [Swift.String])
+  public func played() throws
+  public func paused() throws
+  public func fullscreen(_ val: Swift.Bool) throws
+  public func rewind() throws
+  public func muted(_ val: Swift.Bool) throws
+  public func acceptedLinearInvitation() throws
+  public func closed() throws
+  public func clicked() throws -> Foundation.URL?
+  public func clickedWithCustomAction() throws -> [Foundation.URL]
+  public func error(withReason code: MediaMelonNowtilus.VastErrorCodes?) throws
+  public func trackViewability(type: MediaMelonNowtilus.VastViewableImpressionType) throws
+}
+public enum VastError : Swift.Error {
+  case invalidXMLDocument
+  case invalidVASTDocument
+  case unableToParseDocument
+  case unableToCreateXMLParser
+  case wrapperLimitReached
+  case singleRequestTimeLimitReached
+  case wrapperTimeLimitReached
+  case internalError
+  public static func == (a: MediaMelonNowtilus.VastError, b: MediaMelonNowtilus.VastError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct VastIcon : Swift.Codable {
+  public let program: Swift.String
+  public let width: Swift.Int
+  public let height: Swift.Int
+  public let xPosition: Swift.String
+  public let yPosition: Swift.String
+  public let duration: Swift.Double
+  public let offset: Swift.Double
+  public let apiFramework: Swift.String
+  public let pxratio: Swift.Double
+  public var iconViewTracking: [Foundation.URL]
+  public var iconClicks: MediaMelonNowtilus.IconClicks?
+  public var staticResource: [MediaMelonNowtilus.VastStaticResource]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastIcon {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastIcon : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastIcon, b: MediaMelonNowtilus.VastIcon) -> Swift.Bool
+}
+public struct VastCompanionClickTracking {
+  public let id: Swift.String?
+}
+public struct VastCompanionCreative : Swift.Codable {
+  public let width: Swift.Int
+  public let height: Swift.Int
+  public let id: Swift.String?
+  public let assetWidth: Swift.Int?
+  public let assetHeight: Swift.Int?
+  public let expandedWidth: Swift.Int?
+  public let expandedHeight: Swift.Int?
+  public let apiFramework: Swift.String?
+  public let adSlotId: Swift.String?
+  public let pxRatio: Swift.Double?
+  public var staticResource: [MediaMelonNowtilus.VastStaticResource]
+  public var iFrameResource: [Foundation.URL]
+  public var htmlResource: [Foundation.URL]
+  public var altText: Swift.String?
+  public var companionClickThrough: Foundation.URL?
+  public var companionClickTracking: [Foundation.URL]
+  public var trackingEvents: [MediaMelonNowtilus.VastTrackingEvent]
+  public var adParameters: MediaMelonNowtilus.VastAdParameters?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastCompanionCreative {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastCompanionCreative : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastCompanionCreative, b: MediaMelonNowtilus.VastCompanionCreative) -> Swift.Bool
+}
+public struct VastClientOptions {
+  public let wrapperLimit: Swift.Int
+  public let singleWrapperTimeLimit: Foundation.TimeInterval
+  public let timeLimit: Foundation.TimeInterval
+  public let cachedVMAPModel: MediaMelonNowtilus.VMAPModel?
+  public init(wrapperLimit: Swift.Int = 5, singleWrapperTimeLimit: Foundation.TimeInterval = 5, timeLimit: Foundation.TimeInterval = 10, cachedVMAPModel: MediaMelonNowtilus.VMAPModel? = nil)
+}
+public class VastClient {
+  public static var trackingLogOutput: ((Swift.String, [Foundation.URL]) -> ())?
+  public init(options: MediaMelonNowtilus.VastClientOptions = VastClientOptions())
+  public func parseVast(withContentsOf url: Foundation.URL, completion: @escaping (MediaMelonNowtilus.VastModel?, (any Swift.Error)?) -> ())
+  public func parseVast(withContentsOf stringXMLData: Swift.String, completion: @escaping (MediaMelonNowtilus.VastModel?, (any Swift.Error)?) -> ())
+  public func parseVMAP(withContentsOf url: Foundation.URL) throws -> MediaMelonNowtilus.VMAPModel
+  @objc deinit
+}
+extension Swift.String {
+  public var toSeconds: Swift.Double? {
+    get
+  }
+}
+public struct VastNonLinear : Swift.Codable {
+  public var height: Swift.String
+  public var id: Swift.String
+  public var width: Swift.String
+  public var staticResource: MediaMelonNowtilus.VastStaticResource?
+  public var nonLinearClickTracking: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastNonLinear {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastNonLinear : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastNonLinear, b: MediaMelonNowtilus.VastNonLinear) -> Swift.Bool
+}
+public struct VastResource : Swift.Codable {
+  public let apiFramework: Swift.String?
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastResource : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastResource, b: MediaMelonNowtilus.VastResource) -> Swift.Bool
+}
+public enum TrackingError : Swift.Error {
+  case MissingAdBreak
+  case unableToUpdateProgressTrackingComplete
+  case unableToUpdateProgress(msg: Swift.String)
+  case unableToProvideCreativeClickThroughUrls
+  case internalError(msg: Swift.String)
+  case unableToSkipAdAtThisTime
+  case noAdFound(withId: Swift.String)
+}
+public struct VastMediaFile : Swift.Codable {
+  public let delivery: Swift.String
+  public let type: Swift.String
+  public let width: Swift.String
+  public let height: Swift.String
+  public let codec: Swift.String?
+  public let id: Swift.String?
+  public let bitrate: Swift.Int?
+  public let minBitrate: Swift.Int?
+  public let maxBitrate: Swift.Int?
+  public let scalable: Swift.Bool?
+  public let maintainAspectRatio: Swift.Bool?
+  public let apiFramework: Swift.String?
+  public var url: Foundation.URL?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension MediaMelonNowtilus.VastMediaFile {
+  public init(attrDict: [Swift.String : Swift.String])
+}
+extension MediaMelonNowtilus.VastMediaFile : Swift.Equatable {
+  public static func == (a: MediaMelonNowtilus.VastMediaFile, b: MediaMelonNowtilus.VastMediaFile) -> Swift.Bool
+}
+extension MediaMelonNowtilus.GenericMMWrapper {
+  public static func getSSAIVersion() -> Swift.String
+  public func initialiseSSAIAdManager(mediaUrl: Swift.String, vastUrl: Swift.String, isLive: Swift.Bool)
+  public func initialiseSSAIAdManager(mediaUrl: Swift.String, isLive: Swift.Bool, pollForVast: Swift.Bool, vodResponseData: Foundation.Data, clientSideTracking: Swift.Bool)
+  public func fireAdClickTrackingURLs()
+  public func setMacroSubstitution(macroData dictionary: Swift.Dictionary<Swift.String, Any>)
+  public func enableSSAILogTrace()
+  public func disableSSAILogTrace()
+  public func parseVastURL(vastURL: Swift.String)
+  public func setValidAdId(validAdId: Swift.String)
+  public func syncEpochTime(epochTime: Swift.Int64)
+  public func stopSSAIAdManager()
+}
+extension MediaMelonNowtilus.GenericMMWrapper : MediaMelonNowtilus.MMSSAIDelegate {
+  public func notifySSAIEventWithTimeline(state: MediaMelonNowtilus.MMAdState, adTimeline: [MediaMelonNowtilus.MMSSAIAdInfo])
+  public func notifySSAIAdEvent(state: MediaMelonNowtilus.MMAdState, adInfo: MediaMelonNowtilus.MMSSAIAdInfo)
+  public func notifyAdEventWith(state: MediaMelonNowtilus.MMAdState, vastAd: MediaMelonNowtilus.VastAd?, vastTracker: MediaMelonNowtilus.VastTracker, andAdIndex index: Swift.Int)
+}
+@_inheritsConvenienceInitializers @objc public class MMReachabilityManager : ObjectiveC.NSObject {
+  public static let shared: MediaMelonNowtilus.MMReachabilityManager
+  public func startMonitoring()
+  public func stopMonitoring()
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum ReachabilityErrorMM : Swift.Error {
+  case FailedToCreateWithAddress(Darwin.sockaddr_in)
+  case FailedToCreateWithHostname(Swift.String)
+  case UnableToSetCallback
+  case UnableToSetDispatchQueue
+}
+public let ReachabilityChangedNotificationMM: Foundation.NSNotification.Name
+public class ReachabilityMM {
+  public typealias NetworkReachable = (MediaMelonNowtilus.ReachabilityMM) -> ()
+  public typealias NetworkUnreachable = (MediaMelonNowtilus.ReachabilityMM) -> ()
+  public enum NetworkStatus : Swift.CustomStringConvertible {
+    case notReachable, reachableViaWiFi, reachableViaWWAN
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: MediaMelonNowtilus.ReachabilityMM.NetworkStatus, b: MediaMelonNowtilus.ReachabilityMM.NetworkStatus) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var whenReachable: MediaMelonNowtilus.ReachabilityMM.NetworkReachable?
+  public var whenUnreachable: MediaMelonNowtilus.ReachabilityMM.NetworkUnreachable?
+  public var reachableOnWWAN: Swift.Bool
+  public var currentReachabilityString: Swift.String {
+    get
+  }
+  public var currentReachabilityStatus: MediaMelonNowtilus.ReachabilityMM.NetworkStatus {
+    get
+  }
+  required public init(reachabilityRef: SystemConfiguration.SCNetworkReachability)
+  convenience public init?(hostname: Swift.String)
+  convenience public init?()
+  @objc deinit
+}
+extension MediaMelonNowtilus.ReachabilityMM {
+  public func startNotifier() throws
+  public func stopNotifier()
+  public var isReachable: Swift.Bool {
+    get
+  }
+  public var isReachableViaWWAN: Swift.Bool {
+    get
+  }
+  public var isReachableViaWiFi: Swift.Bool {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+}
+extension MediaMelonNowtilus.MMSSAIAdSate : Swift.Equatable {}
+extension MediaMelonNowtilus.MMSSAIAdSate : Swift.Hashable {}
+extension MediaMelonNowtilus.MMSSAIAdSate : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.MMCurrentPlayerState : Swift.Equatable {}
+extension MediaMelonNowtilus.MMCurrentPlayerState : Swift.Hashable {}
+extension MediaMelonNowtilus.MMOverridableMetrics : Swift.Equatable {}
+extension MediaMelonNowtilus.MMOverridableMetrics : Swift.Hashable {}
+extension MediaMelonNowtilus.TrackingEventType : Swift.Equatable {}
+extension MediaMelonNowtilus.TrackingEventType : Swift.Hashable {}
+extension MediaMelonNowtilus.TrackingEventType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VastErrorCodes : Swift.Equatable {}
+extension MediaMelonNowtilus.VastErrorCodes : Swift.Hashable {}
+extension MediaMelonNowtilus.VastErrorCodes : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.ClickType : Swift.Equatable {}
+extension MediaMelonNowtilus.ClickType : Swift.Hashable {}
+extension MediaMelonNowtilus.ClickType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VMAPAdSourceTemplate : Swift.Equatable {}
+extension MediaMelonNowtilus.VMAPAdSourceTemplate : Swift.Hashable {}
+extension MediaMelonNowtilus.VMAPAdSourceTemplate : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VMAPTrackingEventType : Swift.Equatable {}
+extension MediaMelonNowtilus.VMAPTrackingEventType : Swift.Hashable {}
+extension MediaMelonNowtilus.VMAPTrackingEventType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.PricingModel : Swift.Equatable {}
+extension MediaMelonNowtilus.PricingModel : Swift.Hashable {}
+extension MediaMelonNowtilus.PricingModel : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VastViewableImpressionType : Swift.Equatable {}
+extension MediaMelonNowtilus.VastViewableImpressionType : Swift.Hashable {}
+extension MediaMelonNowtilus.VastViewableImpressionType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.CompanionsRequirement : Swift.Equatable {}
+extension MediaMelonNowtilus.CompanionsRequirement : Swift.Hashable {}
+extension MediaMelonNowtilus.CompanionsRequirement : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VMAPAdBreakType : Swift.Equatable {}
+extension MediaMelonNowtilus.VMAPAdBreakType : Swift.Hashable {}
+extension MediaMelonNowtilus.VMAPAdBreakType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VMAPErrorCodes : Swift.Equatable {}
+extension MediaMelonNowtilus.VMAPErrorCodes : Swift.Hashable {}
+extension MediaMelonNowtilus.VMAPErrorCodes : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VMAPError : Swift.Equatable {}
+extension MediaMelonNowtilus.VMAPError : Swift.Hashable {}
+extension MediaMelonNowtilus.AdType : Swift.Equatable {}
+extension MediaMelonNowtilus.AdType : Swift.Hashable {}
+extension MediaMelonNowtilus.AdType : Swift.RawRepresentable {}
+extension MediaMelonNowtilus.VastError : Swift.Equatable {}
+extension MediaMelonNowtilus.VastError : Swift.Hashable {}
+extension MediaMelonNowtilus.ReachabilityMM.NetworkStatus : Swift.Equatable {}
+extension MediaMelonNowtilus.ReachabilityMM.NetworkStatus : Swift.Hashable {}
